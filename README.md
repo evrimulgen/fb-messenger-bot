@@ -36,7 +36,8 @@ var API_TOKEN = 'MY_FACEBOOK_API_TOKEN';
 Then write your code in api/bot.js file which has the following callbacks.
 
 ```
-onPostback      : postback callback
-replyAttachment : attachment callback (image, audio, location etc.)
-reply           : text or quick reply callback
+onText			: text callback
+onQuickReply	: quick reply callback
+onAttachment	: attachment callback (image, audio, location etc.)
+onPostback		: postback callback
 ```

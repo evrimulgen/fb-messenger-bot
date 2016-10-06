@@ -62,11 +62,19 @@ function onMessage (event) {
 
 	if (messageText) {
 
-		bot.reply(userId, messageText, quick_reply, event);
+		if(quick_reply){
+
+			bot.onQuickReply(userId, quick_reply.payload, event);
+
+		} else {
+
+			bot.onText(userId, messageText, event);
+
+		}
 
 	} else if (messageAttachments) {
 
-		bot.replyAttachment(userId, attachments, event);
+		bot.onAttachment(userId, attachments, event);
 
 	}
 }

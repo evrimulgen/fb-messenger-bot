@@ -20,9 +20,9 @@ function onPostback (userId, payload, event){
 
 }
 
-function replyAttachment (userId, attachments, event) {
+function onAttachment (userId, attachments, event) {
 
-	console.log("bot.replyAttachment");
+	console.log("bot.onAttachment");
 
 	console.log(arguments);
 
@@ -30,24 +30,31 @@ function replyAttachment (userId, attachments, event) {
 
 }
 
-function reply (userId, messageText, quick_reply, event){
+function onQuickReply (userId, payload, event){
 
-	console.log("bot.reply");
+	console.log("bot.onQuickReply");
 
 	console.log(arguments);
 
-	// logic
+	switch(payload){
 
-	if(quick_reply){
+		// logic
 
-		var payload = quick_reply.payload;
-
-		// quick replies
-
-		return;
+		default :
+			break;
 	}
 
+}
+
+function onText (userId, messageText, event){
+
+	console.log("bot.onText");
+
+	console.log(arguments);
+
 	switch(messageText){
+
+		// logic
 
 		default :
 
@@ -95,9 +102,11 @@ function getButtonTemplate(text, buttons){
 
 var bot = {
 
-	reply			: reply,
+	onText			: onText,
 
-	replyAttachment	: replyAttachment,
+	onQuickReply	: onQuickReply,
+
+	onAttachment	: onAttachment,
 
 	onPostback		: onPostback
 
