@@ -27,7 +27,7 @@ Set your verify token for validating webhook in routes/facebook.js file.
 var HUB_VERIFY_TOKEN = 'MY_HUB_VERIFY_TOKEN';
 ```
 
-Set your page access token in routes/facebook.js file.
+Set your page access token in api/facebook.js file.
 
 ```
 var API_TOKEN = 'MY_FACEBOOK_API_TOKEN';
