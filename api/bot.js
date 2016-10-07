@@ -87,6 +87,58 @@ function onText (userId, messageText, event){
 *********** starts here ******************
 *****************************************/
 
+function getImageTemplate(url){
+
+	return {
+		"attachment":{
+			"type" : "image",
+			"payload":{
+				"url" : url
+			}
+		}
+	};
+
+}
+
+function getAudioTemplate(url){
+
+	return {
+		"attachment":{
+			"type":"audio",
+			"payload":{
+				"url":url
+			}
+		}
+	};
+
+}
+
+function getVideoTemplate(url){
+
+	return {
+		"attachment":{
+			"type":"video",
+			"payload":{
+				"url":url
+			}
+		}
+	};
+
+}
+
+function getFileTemplate(url){
+
+	return {
+		"attachment":{
+			"type":"file",
+			"payload":{
+				"url":url
+			}
+		}
+	};
+
+}
+
 function getGenericTemplate(elements){
 
 	return {
@@ -112,6 +164,15 @@ function getButtonTemplate(text, buttons){
 				"buttons"		: buttons
 			}
 		}
+	};
+
+}
+
+function getQuickRepliesTemplate(text, replies){
+
+	return {
+		"text": text,
+		"quick_replies": replies
 	};
 
 }
