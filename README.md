@@ -21,8 +21,7 @@ If you wanna change the path, just edit the following code in app.js file.
 app.use('/facebook', facebook);
 ```
 
-Set config properties in config/config.json file
-Set your verify token for validating webhook in routes/facebook.js file.
+Set config properties in config/config.json file.
 
 ```
 {
