@@ -1,12 +1,11 @@
-var got	= require('got');
-var underscore = require('underscore');
-var util = require('util');
+var got		= require('got');
+var _ 		= require('underscore');
+var util 	= require('util');
+var config 	= require('../config/config.json');
 
 var API_PROFILE_ENDPOINT ="https://graph.facebook.com/v2.6/%s";
-var API_MESSAGES_ENDPOINT ="https://graph.facebook.com/v2.6/me/messages";
-var API_TOKEN = 'MY_FACEBOOK_API_TOKEN';
 
-var IS_LOG_ACTIVE = false;
+var API_MESSAGES_ENDPOINT ="https://graph.facebook.com/v2.6/me/messages";
 
 /**
  * @method getProfile
@@ -22,7 +21,7 @@ function getProfile(userId){
 
 			query : {
 
-				access_token : API_TOKEN
+				access_token : config.facebook.api_token
 
 			},
 
@@ -32,7 +31,7 @@ function getProfile(userId){
 
 		.catch(function(err){
 
-			if(IS_LOG_ACTIVE)
+			if(config.log_active)
 				console.log(err);
 
 		});
@@ -57,7 +56,7 @@ function post(data){
 
 			query : {
 
-				access_token : API_TOKEN
+				access_token : config.facebook.api_token
 
 			},
 
@@ -71,7 +70,7 @@ function post(data){
 
 		.catch(function(err){
 
-			if(IS_LOG_ACTIVE)
+			if(config.log_active)
 				console.log(err);
 
 		});
@@ -102,12 +101,11 @@ function reply(userId, messageData){
 
 	};
 
-	if(underscore.isObject(messageData))
+	if(_.isObject(messageData))
 		body.message = messageData;
 
-
-	if(IS_LOG_ACTIVE)
-		console.log("facebook.reply > message: " + JSON.stringify(body));
+	if(config.log_active)
+		console.log("facebook.reply > data: " + JSON.stringify(body));
 
 	return post(body);
 
@@ -131,6 +129,9 @@ function typingOn(userId){
 
 		sender_action: 'typing_on'
 	};
+
+	if(config.log_active)
+		console.log("facebook.typingOn > data: " + JSON.stringify(body));
 
 	return post(body);
 }

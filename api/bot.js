@@ -1,13 +1,17 @@
 var got	= require('got');
 var util	= require('util');
-var underscore = require('underscore');
+var _ = require('underscore');
 var facebook = require('../api/facebook.js');
+var config 	= require('../config/config.json');
 
 function onPostback (userId, payload, event){
 
-	console.log("bot.onPostback");
+	if(config.log_active) {
 
-	console.log(arguments);
+		console.log("bot.onPostback");
+		console.log(arguments);
+
+	}
 
 	// logic
 
@@ -22,9 +26,13 @@ function onPostback (userId, payload, event){
 
 function onAttachment (userId, attachments, event) {
 
-	console.log("bot.onAttachment");
+	if(config.log_active) {
 
-	console.log(arguments);
+		console.log("bot.onAttachment");
+
+		console.log(arguments);
+
+	}
 
 	// logic
 
@@ -32,9 +40,13 @@ function onAttachment (userId, attachments, event) {
 
 function onQuickReply (userId, payload, event){
 
-	console.log("bot.onQuickReply");
+	if(config.log_active) {
 
-	console.log(arguments);
+		console.log("bot.onQuickReply");
+
+		console.log(arguments);
+
+	}
 
 	switch(payload){
 
@@ -48,9 +60,13 @@ function onQuickReply (userId, payload, event){
 
 function onText (userId, messageText, event){
 
-	console.log("bot.onText");
+	if(config.log_active) {
 
-	console.log(arguments);
+		console.log("bot.onText");
+
+		console.log(arguments);
+
+	}
 
 	switch(messageText){
 

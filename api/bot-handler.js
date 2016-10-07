@@ -1,13 +1,15 @@
 var got	= require('got');
-var underscore = require('underscore');
+var _ = require('underscore');
 var facebook = require('../api/facebook.js');
 var bot = require('../api/bot.js');
+var config 	= require('../config/config.json');
 
 function onReceived (event) {
 
 	var userId = event.sender.id;
 
-	console.log("onReceived > userId: " + userId);
+	if(config.log_active)
+		console.log("onReceived > userId: " + userId);
 
 	facebook
 
@@ -36,7 +38,8 @@ function onReceived (event) {
 
 			} else { // unknown messaging event
 
-				console.log("Webhook received unknown messagingEvent: ", event);
+				if(config.log_active)
+					console.log("Webhook received unknown messagingEvent: ", event);
 
 			}
 
@@ -46,7 +49,8 @@ function onReceived (event) {
 
 function onMessage (event) {
 
-	console.log("onMessage > event: " + JSON.stringify(event));
+	if(config.log_active)
+		console.log("onMessage > event: " + JSON.stringify(event));
 
 	var userId = event.sender.id;
 	var recipientID = event.recipient.id;
@@ -58,7 +62,8 @@ function onMessage (event) {
 	var messageAttachments = message.attachments;
 	var attachments = event.message.attachments;
 
-	console.log("Received message for user %d and page %d at %d with message: %s", userId, recipientID, timeOfMessage, message.text);
+	if(config.log_active)
+		console.log("Received message for user %d and page %d at %d with message: %s", userId, recipientID, timeOfMessage, message.text);
 
 	if (messageText) {
 
@@ -81,7 +86,8 @@ function onMessage (event) {
 
 function onPostback (event){
 
-	console.log("onPostback > event: " + JSON.stringify(event));
+	if(config.log_active)
+		console.log("onPostback > event: " + JSON.stringify(event));
 
 	var userId = event.sender.id;
 	var recipientID = event.recipient.id;
@@ -91,7 +97,8 @@ function onPostback (event){
 	// button for Structured Messages.
 	var payload = event.postback.payload;
 
-	console.log("Received postback for user %d and page %d with payload '%s' " +
+	if(config.log_active)
+		console.log("Received postback for user %d and page %d with payload '%s' " +
 		"at %d", userId, recipientID, payload, timeOfPostback);
 
 	bot.onPostback(userId, payload, event);

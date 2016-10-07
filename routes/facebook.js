@@ -1,21 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var handler = require('../api/bot-handler.js');
-
-var HUB_MODE = 'subscribe';
-var HUB_VERIFY_TOKEN = 'MY_HUB_VERIFY_TOKEN';
+var config 	= require('../config/config.json');
 
 router.get('/', function (req, res){
 
-  if (req.query['hub.mode'] === HUB_MODE && req.query['hub.verify_token'] === HUB_VERIFY_TOKEN) {
+  if (req.query['hub.mode'] === 'subscribe'
+      && req.query['hub.verify_token'] === config.facebook.verify_token) {
 
-    console.log("Validating webhook");
+    if(config.log_active)
+      console.log("Validating webhook");
 
     res.status(200).send(req.query['hub.challenge']);
 
   } else {
 
-    console.error("Failed validation. Make sure the validation tokens match.");
+    if(config.log_active)
+      console.error("Failed validation. Make sure the validation tokens match.");
 
     res.sendStatus(403);
   }

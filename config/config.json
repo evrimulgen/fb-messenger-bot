@@ -1,0 +1,13 @@
+{
+
+  "log_active": false,
+
+  "facebook"  : {
+
+    "api_token"     : "MY_FACEBOOK_API_TOKEN",
+
+    "verify_token"  : "MY_HUB_VERIFY_TOKEN"
+
+  }
+
+}
