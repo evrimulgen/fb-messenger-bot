@@ -1,6 +1,6 @@
 var got	= require('got');
 var _ = require('underscore');
-var facebook = require('../api/facebook.js');
+var facebook = require('../facebook/client.js');
 var bot = require('../api/bot.js');
 var config 	= require('../config/config.json');
 

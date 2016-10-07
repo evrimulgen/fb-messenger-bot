@@ -3,9 +3,9 @@ var _ 		= require('underscore');
 var util 	= require('util');
 var config 	= require('../config/config.json');
 
-var API_PROFILE_ENDPOINT ="https://graph.facebook.com/v2.6/%s";
+var API_PROFILE_ENDPOINT = "https://graph.facebook.com/v2.6/%s";
 
-var API_MESSAGES_ENDPOINT ="https://graph.facebook.com/v2.6/me/messages";
+var API_MESSAGES_ENDPOINT = "https://graph.facebook.com/v2.6/me/messages";
 
 /**
  * @method getProfile
@@ -135,7 +135,6 @@ function typingOn(userId){
 
 	return post(body);
 }
-
 
 var facebook = {
 

@@ -1,7 +1,7 @@
 var got	= require('got');
 var util	= require('util');
 var _ = require('underscore');
-var facebook = require('../api/facebook.js');
+var facebook = require('../facebook/client.js');
 var config 	= require('../config/config.json');
 
 function onPostback (userId, payload, event){
