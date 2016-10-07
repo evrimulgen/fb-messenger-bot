@@ -21,16 +21,23 @@ If you wanna change the path, just edit the following code in app.js file.
 app.use('/facebook', facebook);
 ```
 
+Set config properties in config/config.json file
 Set your verify token for validating webhook in routes/facebook.js file.
 
 ```
-var HUB_VERIFY_TOKEN = 'MY_HUB_VERIFY_TOKEN';
-```
+{
 
-Set your page access token in api/facebook.js file.
+  "log_active": false, // is logging enabled?
 
-```
-var API_TOKEN = 'MY_FACEBOOK_API_TOKEN';
+  "facebook"  : {
+
+    "api_token"     : "MY_FACEBOOK_API_TOKEN", // page access token
+
+    "verify_token"  : "MY_HUB_VERIFY_TOKEN" // verify token for validating webhook
+
+  }
+
+}
 ```
 
 Then write your code in api/bot.js file which has the following callbacks.
