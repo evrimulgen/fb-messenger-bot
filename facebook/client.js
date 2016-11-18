@@ -3,9 +3,9 @@ var _ 		= require('underscore');
 var util 	= require('util');
 var config 	= require('../config/config.json');
 
-var API_PROFILE_ENDPOINT = "https://graph.facebook.com/v2.6/%s";
-
-var API_MESSAGES_ENDPOINT = "https://graph.facebook.com/v2.6/me/messages";
+const API_PROFILE_ENDPOINT = "https://graph.facebook.com/v2.6/%s";
+const API_MESSAGES_ENDPOINT = "https://graph.facebook.com/v2.6/me/messages";
+const API_THREAD_SETTINGS_ENDPOINT = "https://graph.facebook.com/v2.6/me/thread_settings";
 
 /**
  * @method getProfile
@@ -27,15 +27,40 @@ function getProfile(userId){
 
 			method: 'GET'
 
-		})
-
-		.catch(function(err){
-
-			if(config.log_active)
-				console.log(err);
-
 		});
 
+}
+
+/**
+ * @method call
+ * @desc do request to api
+ * @param {string} url : api url
+ * @param {object} data : text or message object
+ * @returns {function} promise
+ */
+function call(url, data){
+
+	return got(url, {
+
+		headers: {
+
+			'Content-type': 'application/json'
+
+		},
+
+		query : {
+
+			access_token : config.facebook.api_token
+
+		},
+
+		body : JSON.stringify(data),
+
+		json: true,
+
+		method: 'POST'
+
+	});
 }
 
 /**
@@ -46,34 +71,8 @@ function getProfile(userId){
  */
 function post(data){
 
-	return got(API_MESSAGES_ENDPOINT, {
+	return call(API_MESSAGES_ENDPOINT, data);
 
-			headers: {
-
-				'Content-type': 'application/json'
-
-			},
-
-			query : {
-
-				access_token : config.facebook.api_token
-
-			},
-
-			body : JSON.stringify(data),
-
-			json: true,
-
-			method: 'POST'
-
-		})
-
-		.catch(function(err){
-
-			if(config.log_active)
-				console.log(err);
-
-		});
 }
 
 /**
@@ -104,9 +103,6 @@ function reply(userId, messageData){
 	if(_.isObject(messageData))
 		body.message = messageData;
 
-	if(config.log_active)
-		console.log("facebook.reply > data: " + JSON.stringify(body));
-
 	return post(body);
 
 }
@@ -130,19 +126,63 @@ function typingOn(userId){
 		sender_action: 'typing_on'
 	};
 
-	if(config.log_active)
-		console.log("facebook.typingOn > data: " + JSON.stringify(body));
-
 	return post(body);
+}
+
+/**
+ * @method setPersistentMenu
+ * @desc Set persistent menu via facebook api
+ * @param {array} actions : action buttons
+ * @returns {function} promise
+ */
+function setPersistentMenu(actions){
+
+	return call(API_THREAD_SETTINGS_ENDPOINT, {
+
+		setting_type	: "call_to_actions",
+
+		thread_state	: "existing_thread",
+
+		call_to_actions	: actions
+
+	});
+
+}
+
+/**
+ * @method setGetStartedButton
+ * @desc Set get started button via facebook api
+ * @returns {function} promise
+ */
+function setGetStartedButton(){
+
+	return call(API_THREAD_SETTINGS_ENDPOINT, {
+
+		setting_type	: "call_to_actions",
+
+		thread_state	: "new_thread",
+
+		call_to_actions	: [
+			{
+				payload	: "PAYLOAD_GET_STARTED_BUTTON"
+			}
+		]
+
+	});
+
 }
 
 var facebook = {
 
-	reply		: reply,
+	reply				: reply,
 
-	typingOn	: typingOn,
+	typingOn			: typingOn,
 
-	getProfile	: getProfile
+	getProfile			: getProfile,
+
+	setPersistentMenu	: setPersistentMenu,
+
+	setGetStartedButton	: setGetStartedButton
 
 };
 
